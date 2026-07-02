@@ -1,0 +1,26 @@
+---
+- name: Server Readiness and Package Installation
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: Check htop and curl installation
+      apt:
+        name:
+          - htop
+          - curl
+        state: present
+        update_cache: yes
+
+- name: Custom MOTD
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: Create custom MOTD file
+      copy:
+        dest: /etc/motd
+        content: |
+          =======================================
+          Welcome to the Testing Server!
+          =======================================
