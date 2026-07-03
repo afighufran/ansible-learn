@@ -1,0 +1,1 @@
+Buat belajar ansible bang, mencakup dari cara gunain inventory, struktur file .yaml, cara gunain handler dan dry run agar tidak langsung ke production.
