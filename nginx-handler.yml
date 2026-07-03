@@ -1,0 +1,25 @@
+---
+- name: Belajar Handlers dan Safe Service Restart
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: 1. Memastikan Nginx terinstall
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    
+    - name: 2. Mengubah file halaman depan Nginx
+      copy:
+        dest: /var/www/html/index.nginx-debian.html
+        content:
+          <h1>HALO BANG</h1>
+          <p>Ini adalah halaman depan Nginx yang telah diubah menggunakan Ansible.</p>
+      notify: Restart Service Nginx
+
+  handlers:
+    - name: Restart Service Nginx
+      service:
+        name: nginx
+        state: restarted

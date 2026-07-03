@@ -1,0 +1,30 @@
+---
+- name: Reproduce Failed Handler
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: Membuka port 8088 di Nginx
+      copy:
+        dest: /etc/nginx/conf.d/8088.conf
+        content: |
+          server {
+              listen 8088;
+              location / {
+                  return 200 "Port 8088 telah dibuka!!\n";
+              }
+          }
+      notify: Restart Service Nginx Rusak
+
+  handlers:
+    - name: Restart Service Nginx Rusak
+      service:
+        name: nginxx_rusak
+        state: restarted
+
+  # Pake ini untuk handler yang benar
+  # handlers:
+  #   - name: Restart Service Nginx Rusak
+  #     service:
+  #       name: nginx
+  #       state: restarted
