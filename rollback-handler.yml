@@ -1,0 +1,17 @@
+---
+- name: Rollback Handler Example
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: 1. Menghapus file port 8088
+      file:
+        path: /etc/nginx/conf.d/8088.conf
+        state: absent
+      notify: Delete Port 8088 Configuration
+  
+  handlers:
+    - name: Delete Port 8088 Configuration
+      service:
+        name: nginx
+        state: restarted
