@@ -22,7 +22,7 @@
         name: nginxx_rusak
         state: restarted
 
-  # Pake ini untuk handler yang benar
+  #Pake ini untuk handler yang benar
   # handlers:
   #   - name: Restart Service Nginx Rusak
   #     service:
