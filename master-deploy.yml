@@ -1,0 +1,7 @@
+---
+- name: Deploy pake Ansible Roles
+  hosts: testing_server
+  become: yes
+
+  roles:
+    - webserver

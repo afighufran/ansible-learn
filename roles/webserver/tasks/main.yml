@@ -1,0 +1,18 @@
+---
+- name: 1. Memastikan Nginx terinstall
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: 2. Mengubah file halaman depan Nginx
+  copy:
+    dest: /var/www/html/index.nginx-debian.html
+    content: |
+      <center><h1>WOI</h1></center>
+      <marquee scrollamount="30"><h1>BANG RAMA GANTENG BANGET WOI</h1></marquee>
+      <marquee scrollamount="30"><h1>BANG SAMSUL GANTENG BANGET WOI</h1></marquee>
+      <marquee scrollamount="30"><h1>RONALDO CUMA BISA PENALTY</h1></marquee>
+      <marquee scrollamount="30"><h1>HAALAND CYBORG</h1></marquee>
+  notify:
+    - Restart Service Nginx
