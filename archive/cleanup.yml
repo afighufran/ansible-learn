@@ -1,0 +1,32 @@
+---
+- name: Cleanup Nginx pake Role dari Ansible Galaxy
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: 1. Hapus file konfigurasi vhost dari sites-enabled
+      file:
+        path: /etc/nginx/sites-enabled/test_galaxy.conf
+        state: absent
+      notify:
+        - Restart Nginx
+
+    - name: 2. Hapus file konfigurasi vhost dari sites-available
+      file:
+        path: /etc/nginx/sites-available/test_galaxy.conf
+        state: absent
+      notify:
+        - Restart Nginx
+
+    - name: 3. Hapus file konfigurasi conf.d
+      file:
+        path: /etc/nginx/conf.d/test_galaxy.conf
+        state: absent
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted

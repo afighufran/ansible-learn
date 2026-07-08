@@ -1,0 +1,19 @@
+---
+- name: Deploy Nginx pake Role dari Ansible Galaxy
+  hosts: testing_server
+  become: yes
+
+  vars:
+    nginx_remove_default_vhost: true
+    nginx_vhosts:
+      - listen: "8081"
+        server_name: "localhost"
+        state: present
+        filename: "test_galaxy.conf"
+        extra_parameters: |
+          location / {
+            return 200 'Halo! Ini adalah test Nginx roles pake port 8081';
+          }
+
+  roles:
+    - geerlingguy.nginx
