@@ -1,0 +1,30 @@
+---
+- name: Tes Deploy pake Conditional dan Loops
+  hosts: testing_server
+  become: yes
+
+  tasks:
+    - name: Install paket troubleshooting
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - htop
+        - curl
+        - wget
+        - unzip
+        - tree
+      
+    - name: File konfigurasi yang muncul kalau OS Familynya Debian/Ubuntu
+      copy:
+        dest: /tmp/os-family.txt
+        content: |
+          Ini adalah OS Family Debian/Ubuntu
+          Distribution: {{ansible_distribution}} {{ansible_distribution_version}}
+      when: ansible_os_family == "Debian"
+
+    - name: Skip Tasks karena family OSnya Red Hat
+      debug:
+        msg: "Ini adalah OS Family Red Hat"
+      when: ansible_os_family == "RedHat"
+    
