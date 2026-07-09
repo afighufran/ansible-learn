@@ -1,0 +1,12 @@
+---
+- name: Tes Vault
+  hosts: testing_server
+  become: yes
+
+  vars_files:
+    - secrets.yml
+
+  tasks:
+    - name: Tes Vault
+      debug:
+        msg: "Berhasil mengambil data dari Vault, DB Password: {{db_password}}"
