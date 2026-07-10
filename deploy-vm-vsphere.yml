@@ -1,0 +1,34 @@
+---
+- name: Deploy VM
+  hosts: localhost
+  gather_facts: true
+
+  vars_files:
+    - secrets.yml
+
+  tasks:
+    - name: Clone VM dari Template
+      community.vmware.vmware_guest:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        datacenter: "{{ datacenter_name}}"
+        folder: "/Datacenter/vm"
+        name: "vm-ansible"
+        state: poweredon
+        template: "Ubuntu 24 Base"
+        hardware:
+          memory_mb: 2048
+          num_cpus: 2
+        networks:
+          - name: "VLAN 200"
+            device_type: vmxnet3
+        customization:
+          hostname: "vm-ansible"
+          dns_servers:
+            - "172.16.9.22"
+      delegate_to: localhost
+
+
+      
